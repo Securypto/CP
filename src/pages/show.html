@@ -1,0 +1,44 @@
+  <ion-header>
+    <ion-navbar>
+      <ion-title>QR Code</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content center text-center><div id="qr"></div><br>
+
+  <ion-card><ion-item text-wrap text-center>{{t}}<br>
+<button ion-button outline icon-right id="Copybtn" ngxClipboard [cbContent]="t" (cbOnSuccess)="saveSuccess()" *ngIf="id!=3">
+    Save to clipboard
+</button></ion-item>
+  </ion-card><br>
+
+
+
+<button ion-button outline *ngIf="id==3"><ion-icon name="ios-camera"></ion-icon>Scan signed transactions <input type="file" onchange="handleFiles(this.files)" id="file-input-broad" *ngIf="iType==1" value="Capturing QR"><input id="file-input-broad" type="button" (click)="onCamera()" *ngIf="iType==0"  value="Capturing QR"></button>
+
+
+<ion-card *ngIf="id==2">
+  <ion-card-header>
+    Transactions
+  </ion-card-header>
+  <ion-card-content>
+    No. Transactions : {{raw.n_tx}} <br>
+    Total Sent : {{raw.total_sent/100000000}} <br>
+    Total Received : {{raw.total_received/100000000}} <br>
+    Final Balance : {{raw.final_balance/100000000}} <br>
+  </ion-card-content>
+</ion-card>
+<br>
+<ion-list *ngIf="id==2">
+Last 20 Transactions <button ion-button outline item-end icon-center (click)="onReload()" [disabled]="reload">
+      <ion-icon name="refresh"></ion-icon></button>
+<ion-item text-center *ngFor="let txs of txList">
+<font color={{txs.c}}> {{txs.dt}} <br> {{txs.inout}} <br> {{txs.price | currency:cur}} <br> {{txs.con}} confirmations</font><button ion-button outline item-end icon-center (click)="onTransaction(txs)">
+      <ion-icon name="information-circle"></ion-icon>
+    </button>
+</ion-item>
+
+<button ion-button outline (click)="moreTx()">More transactions</button>
+
+</ion-list>
+
+</ion-content>

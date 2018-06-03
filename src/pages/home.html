@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar text-center>
+<ion-item>
+      <img src="assets/imgs/logo80x100.png" width="50" height="40" (click)="showID()"/>
+
+      <button ion-button outline item-end icon-center *ngIf="dID != ''">
+      <ion-icon name="camera"></ion-icon><input type="file" onchange="handleFiles(this.files)" id="file-input-home" *ngIf="iType==1" value="Capturing QR"><input id="file-input-home" type="button" (click)="onCamera()" *ngIf="iType==0"  value="Capturing QR"> </button>
+      <button ion-button outline item-end icon-center (click)="onReload()" *ngIf="dID != ''" [disabled]="reload">
+      <ion-icon name="refresh"></ion-icon></button>
+      <button ion-button outline item-end icon-center (click)="onLogout()" *ngIf="dID != ''">
+      <ion-icon name="exit"></ion-icon></button>
+      <button ion-button outline item-end icon-center>
+      <ion-icon name="help"></ion-icon>
+      
+    </button>
+</ion-item>
+
+  </ion-navbar>
+</ion-header>
+
+
+ 
+ 
+
+<ion-content padding>
+
+<ion-card text-center *ngIf="dID == ''"><ion-card-header>
+
+              <ion-icon name="ios-camera" class="larger"></ion-icon><input type="file" onchange="handleFiles(this.files)" id="file-input-home" *ngIf="iType==1" value="Capturing QR"><input id="file-input-home" type="button" (click)="onCamera()" *ngIf="iType==0"  value="Capturing QR"> 
+
+</ion-card-header><ion-card-content>
+
+</ion-card-content></ion-card>
+
+<ion-list *ngIf="dID != ''">
+<ion-item-sliding *ngFor="let item of listData">
+
+ <ion-item *ngIf="item.show==true">
+
+     <h1><b> {{item.label}} </b></h1> <h3> <i class="cc {{item.name}}" title="{{item.name}}"></i> {{item.name}} : <font color="{{item.color}}">{{item.address}}</font></h3> <h4><ion-icon ios="ios-at" md="md-at"></ion-icon> {{item.amount}} </h4> <h4><ion-icon name="cash"></ion-icon> {{item.price | currency:cur}}</h4>
+</ion-item>
+    
+<ion-item-options side="left">
+      <button ion-button color="primary" (click)="onSend(item)" *ngIf="item.amount > 0">
+        <ion-icon ios="ios-send" md="md-send"></ion-icon>
+        SEND
+      </button>
+      <button ion-button color="secondary" (click)="onReceive(item)">
+        <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
+        RECEIVE
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+    
+</ion-content>
+
+
+
+
+
+<ion-footer>
+
+<ion-item>
+        
+        <ion-label>
+         {{totalPrice | currency:cur}}
+        </ion-label>
+        <ion-select (ionChange)="filChange()" interface="popover" [(ngModel)]="fil"><ion-option value="{{fil}}" *ngFor="let fil of filList()">{{fil}}
+  			</ion-option>
+  		</ion-select>
+        
+
+        <ion-select (ionChange)="curChange()" interface="popover" [(ngModel)]="cur">
+  			<ion-option value="{{cur}}" *ngFor="let cur of curList()">{{cur}}</ion-option>
+  		</ion-select>
+
+        </ion-item>
+
+
+</ion-footer>

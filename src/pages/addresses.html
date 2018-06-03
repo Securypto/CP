@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Address List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content padding>
+
+<div padding>
+  <ion-segment [(ngModel)]="show">
+    <ion-segment-button value="All">
+      All
+    </ion-segment-button>
+    <ion-segment-button value="Unused">
+      Unused
+    </ion-segment-button>
+    <ion-segment-button value="Funded">
+      Funded
+    </ion-segment-button>
+    <ion-segment-button value="Used">
+      Used
+    </ion-segment-button>      
+  </ion-segment>
+</div>
+    
+<ion-list >
+<ng-container *ngFor="let item of aList" >
+<ion-item-sliding *ngIf="show=='All' || show=='Unused' && item.total_received==0 || show == 'Funded' && item.fbal > 0 || show=='Used' && item.total_received > 0">
+ <ion-item>
+
+     <h1><ion-icon name="ios-star" *ngIf="item.fav==1" (click)="setFav(item.id,0)"></ion-icon><ion-icon name="ios-star-outline" *ngIf="item.fav==0" (click)="setFav(item.id,1)"></ion-icon> <b> {{item.label}} </b></h1> <h3> <i class="cc {{item.name}}" title="{{item.name}}"></i> {{item.name}} : <font color="red">{{item.address}}</font></h3> <h4><ion-icon ios="ios-at" md="md-at"></ion-icon> {{item.amount}} </h4> <h4><ion-icon name="logo-usd"></ion-icon> {{item.price | currency:cur}}</h4>
+</ion-item>
+    
+<ion-item-options side="left">
+      <button ion-button color="primary" *ngIf="item.amount > 0">
+        <ion-icon ios="ios-send" md="md-send"></ion-icon>
+        SEND
+      </button>
+      <button ion-button color="secondary" (click)="onReceive(item)">
+        <ion-icon ios="ios-qr-scanner" md="md-qr-scanner"></ion-icon>
+        RECEIVE
+      </button>
+    </ion-item-options>
+  
+  </ion-item-sliding>
+    </ng-container>  
+</ion-list>
+    
+</ion-content>
+

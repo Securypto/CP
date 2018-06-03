@@ -1,0 +1,140 @@
+  
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Send
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    
+
+    <ion-card>
+
+  <ion-card-header>
+    Pay To
+  </ion-card-header>
+
+  <ion-card-content>
+
+      <ion-item>
+
+    <ion-input type="text" placeholder="Address" [(ngModel)]="address" (ionChange)="onAddressChange()"></ion-input>
+
+              <button item-right><ion-icon name="ios-camera"></ion-icon><input type="file" onchange="handleFiles(this.files,true)" id="file-input" *ngIf="iType==1" value="Capturing QR"><input id="file-input" type="button" (click)="onCamera()" *ngIf="iType==0"  value="Capturing QR"></button>
+  </ion-item>
+
+  </ion-card-content>
+
+</ion-card>
+
+
+<ion-card>
+
+  <ion-card-header>
+    Amount
+  </ion-card-header>
+
+  <ion-card-content>
+
+
+ <ion-item>
+  <ion-label>BTC</ion-label>
+    <ion-input type="text" [(ngModel)]="amount" (change)="onAmtChange()" [disabled]="!addressok"></ion-input>
+  </ion-item>
+   <ion-item>
+    <ion-label>{{cur}}</ion-label>
+    <ion-input type="text" [(ngModel)]="price" (change)="onPriceChange()" [disabled]="!addressok"></ion-input>
+  </ion-item>
+
+<ion-item text-wrap>
+    <ion-range min="0" max="100" [(ngModel)]="percent" color="secondary" pin="true" (ionBlur)="onPerChange()" [disabled]="!addressok">
+      <ion-label range-left>0%</ion-label>
+      <ion-label range-right>100%</ion-label>
+    </ion-range>
+  </ion-item>
+<ion-badge item-centered color="secondary">{{percent}}%</ion-badge>
+
+  </ion-card-content>
+
+</ion-card>
+
+
+<ion-card>
+
+  <ion-card-header>
+    Fee
+  </ion-card-header>
+
+  <ion-card-content>
+
+
+ <ion-item>
+  <ion-label>BTC</ion-label>
+    <ion-input type="text" [(ngModel)]="f_amount" disabled="true"></ion-input>
+  </ion-item>
+   <ion-item>
+    <ion-label>{{cur}}</ion-label>
+    <ion-input type="text" [(ngModel)]="f_price" disabled="true"></ion-input>
+  </ion-item>
+
+<ion-item text-wrap>
+    <ion-range min="2" max="25" [(ngModel)]="fees" color="secondary" pin="true" (ionChange)="onFPerChange()" [disabled]="!addressok">
+      <ion-label range-left>2</ion-label>
+      <ion-label range-right>25</ion-label>
+    </ion-range>
+
+  </ion-item>
+<ion-badge item-centered color="secondary">Within {{ fees }} blocks ({{fees*10}} mins)</ion-badge>
+
+  </ion-card-content>
+
+</ion-card>
+
+
+<div padding>
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="inputs">
+      Inputs
+    </ion-segment-button>
+    <ion-segment-button value="outputs">
+      Outputs
+    </ion-segment-button>
+    <ion-segment-button value="trans">
+      Transactions
+    </ion-segment-button>    
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list *ngSwitchCase="'inputs'">
+<ion-item-sliding *ngFor="let item of listInputs">
+  <ion-item>{{item.tx_hash_big_endian}} <br> {{item.value/100000000}}</ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list  *ngSwitchCase="'outputs'">
+<ion-item-sliding *ngFor="let item of listOutputs">
+    <ion-item>{{item.address}} <br> {{item.value/100000000}}</ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-card  *ngSwitchCase="'trans'">
+    <ion-item text-wrap>{{tx}}</ion-item>
+</ion-card>
+</div>
+
+    <br>
+<button ion-button outline icon-right (click)="showQR()">
+  Sign transactions
+</button>
+
+
+
+</ion-content>
+

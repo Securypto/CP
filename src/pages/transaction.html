@@ -1,0 +1,37 @@
+ <ion-header>
+    <ion-navbar>
+      <ion-title>Transactions</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+
+<div padding>
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="inputs">
+      Inputs
+    </ion-segment-button>
+    <ion-segment-button value="outputs">
+      Outputs
+    </ion-segment-button>   
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list *ngSwitchCase="'inputs'">
+<ion-item-sliding *ngFor="let item of listInputs">
+  <ion-item>{{item.prev_out.addr}} <br> {{item.prev_out.value/100000000}}</ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list  *ngSwitchCase="'outputs'">
+<ion-item-sliding *ngFor="let item of listOutputs">
+    <ion-item>{{item.addr}} <br> {{item.value/100000000}}</ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+
+  </ion-content>

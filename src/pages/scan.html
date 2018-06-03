@@ -1,0 +1,65 @@
+ <ion-header>
+    <ion-navbar>
+      <ion-title>Scanning QR Code</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+  <ion-content>
+
+<canvas id="qr-canvas" width="320" height="240" style="width: 320px; height: 240px;display:none"></canvas>
+
+  <br><div id="outdiv"></div>
+  <ion-item text-center *ngIf="mode==1">Play video to scan QR</ion-item>
+    <ion-card *ngIf="progressPercent > 0 && insList.length == 0 && outsList.length == 0">
+      <ion-card-header>
+    {{qrDone}} / {{qrTotal}}
+  </ion-card-header>
+    <ion-card-content>
+      <div class="item item-text-wrap">
+        <div class="loader" [style.width]="getPercent()">
+          <p class="percent">{{progressPercent}}%</p>
+        </div>
+      </div>
+      </ion-card-content>
+    </ion-card>
+
+
+
+<div padding *ngIf="insList.length > 0 || outsList.length > 0">
+<ion-item text-center><button ion-button outline (click)="broadcast(rawtxt)">Broadcast transaction</button></ion-item>
+  <ion-segment [(ngModel)]="tab">
+    <ion-segment-button value="inputs">
+      Inputs
+    </ion-segment-button>
+    <ion-segment-button value="outputs">
+      Outputs
+    </ion-segment-button>
+    <ion-segment-button value="trans">
+      Transactions
+    </ion-segment-button>      
+  </ion-segment>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list *ngSwitchCase="'inputs'">
+<ion-item-sliding *ngFor="let item of insList">
+  <ion-item>{{item.txid}} </ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+<div [ngSwitch]="tab">
+<ion-list  *ngSwitchCase="'outputs'">
+<ion-item-sliding *ngFor="let item of outsList">
+    <ion-item>{{item.address}} <br> {{item.value/100000000}}</ion-item>
+</ion-item-sliding>
+</ion-list>
+</div>
+
+<div [ngSwitch]="tab" *ngIf="insList.length > 0 || outsList.length > 0">
+<ion-card  *ngSwitchCase="'trans'">
+    <ion-item text-wrap>{{rawtxt}}</ion-item>
+</ion-card>
+</div>
+
+  </ion-content>
