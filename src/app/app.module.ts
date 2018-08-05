@@ -1,3 +1,4 @@
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -44,6 +45,7 @@ import { AddressesPage } from '../pages/addresses';
     AddressesPage   
   ],
   providers: [
+    AndroidPermissions,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

@@ -452,6 +452,7 @@ function setwebcam(a)
     }
 	
 	var options = true;
+  var device_id = 0;
 	if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
 	{
 		try{
@@ -459,11 +460,16 @@ function setwebcam(a)
 			.then(function(devices) {
 			  devices.forEach(function(device) {
 				if (device.kind === 'videoinput') {
+          device_id = device.deviceId;
 				  if(device.label.toLowerCase().search("back") >-1)
 					options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
 				}
+
 				console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
 			  });
+        if(options == true){
+          options = {'deviceId': {'exact':device_id}, 'facingMode':'environment'} ;
+        }
 			  setwebcam2(options);
 			});
 		}
