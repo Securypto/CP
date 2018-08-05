@@ -1,9 +1,9 @@
 # DigiSafeGuard CP
 
-1.Install NodeJS https://nodejs.org/en/
-2.Install Ionic 
-    npm install -g ionic
-3.Run development locally
-    ionic serve
-4.Android production build
-    ionic cordova build android --prod --release
+1.Install NodeJS https://nodejs.org/en/ <br />
+2.Install Ionic <br />
+    npm install -g ionic <br />
+3.Run development locally <br />
+    ionic serve <br />
+4.Android production build <br />
+    ionic cordova build android --prod --release <br />
