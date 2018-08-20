@@ -232,7 +232,7 @@ curList(): string[] {
 
     this.http.get("https://blockchain.info/unspent?cors=true&active="+t.address).map(res => res.json()).subscribe(unspent => {
         //this.navCtrl.push(InputPage,{address:t.address,unspent:unspent});
-       this.http.get("https://www.digisafeguard.com/DSG-CP/estimatesmartfee.json").map(res => res.json()).subscribe(fees => {
+       this.http.get("https://cp.securypto.io/estimatesmartfee.json").map(res => res.json()).subscribe(fees => {
         this.navCtrl.push(InputPage,{address:t.address,unspent:unspent,fees:fees});
         }); 
     }); 

@@ -1,4 +1,4 @@
-# DigiSafeGuard CP
+# Securypto CP
 
 1.Install NodeJS https://nodejs.org/en/ <br />
 2.Install Ionic <br />
